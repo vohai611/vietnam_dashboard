@@ -11,6 +11,7 @@ library(shiny)
 library(here)
 library(dplyr)
 library(stringr)
+library(ggplot2)
 library(echarts4r)
 library(shinydashboard)
 library(shinydashboardPlus)
@@ -23,8 +24,13 @@ ui =  dashboardPage(
     
   ),
   dashboardBody(
-    box(title = "Viet map",height = NULL,
-        fluidRow(echarts4rOutput("viet_map", height = "800px"))
-  ),
+    column(6, box(title = "Viet map",height = NULL,
+                  fluidRow(echarts4rOutput("viet_map", height = "800px"))
+    )),
+    column(6,
+           box(width = 6, 
+               plotOutput("province_crop")))
+    
+  
   
 ))

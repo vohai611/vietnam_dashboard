@@ -15,4 +15,12 @@ server = function(input,output ,session){
       draw_viet_map()
   })  
   observeEvent(input$viet_map_clicked_data, print(input$viet_map_clicked_data))
+  
+  output$province_crop = renderPlot({
+    agri %>% 
+      filter(region  == input$viet_map_clicked_data$name,
+             str_detect(category, input$category)) %>% 
+      ggplot(aes(year, value, color = category))+
+      geom_point()
+  })
 }
