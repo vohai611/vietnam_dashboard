@@ -12,7 +12,9 @@ library(here)
 library(dplyr)
 library(stringr)
 library(ggplot2)
+library(forcats)
 library(echarts4r)
+library(plotly)
 library(shinydashboard)
 library(shinydashboardPlus)
 
@@ -26,7 +28,9 @@ ui =  dashboardPage(
   dashboardBody(
     fluidRow(
       column(
-        width = 6, box(
+        width = 6,
+        fluidRow(box(width = 6,title = "b1"),box(width = 6, title = "b2")),
+        box(
           width = NULL, 
           title = "Viet map",
           height = NULL,
@@ -34,6 +38,8 @@ ui =  dashboardPage(
         )
       ),
       column(width = 6,
-             box(width = NULL,
-               plotOutput("province_crop")
-             )))))
+             box(title = "chart", width = NULL,
+               echarts4rOutput("province_crop")
+             ),
+             box(title = "table"))
+      )))

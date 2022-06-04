@@ -56,7 +56,8 @@ cassava_area = gso_read(by_province$link[77])$data %>%
   pivot_longer(-c(region,area), names_to = "year") %>% 
   mutate(category = "cassava_area")
 
-cassava_prod = gso_read(by_province$link[78])$data %>% 
+cassava_prod =
+  gso_read(by_province$link[78])$data %>% 
   clean_1() %>% 
   pivot_longer(-c(region,area), names_to = "year") %>% 
   mutate(category  = "cassava_prod")
@@ -76,14 +77,25 @@ sw_potato_prod = gso_read(by_province$link[76])$data %>%
 
 
 
-agri = list(cereal_area, maize_area, paddy_area, cassava_area, sw_potato_area,
-                 cereal_prod, maize_prod, paddy_prod, cassava_prod, sw_potato_prod) %>% 
+agri = list(
+  cereal_area,
+  maize_area,
+  paddy_area,
+  #cassava_area,
+  sw_potato_area,
+  cereal_prod,
+  maize_prod,
+  paddy_prod,
+  #cassava_prod,
+  sw_potato_prod
+) %>% 
   data.table::rbindlist() %>% 
   as_tibble()
   
 agri = agri %>% 
    mutate(region = str_to_title(str_squish(region))) %>% 
    mutate(region = case_when(region  == "Thua Thien-Hue"~ "Thua Thien Hue",
+                             region == "Ho Chi Minh City" ~ "Ho Chi Minh",
                              TRUE ~ region)) 
 library(here)
 saveRDS(agri, here("data/agri.rds"))
