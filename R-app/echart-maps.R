@@ -1,10 +1,12 @@
+small_vnjson = readRDS("data/small_vnjson.rds")
+
 draw_viet_map =  function(data,cat, prod) {
   data %>%
     filter(!region %in% .env$region) %>% 
     filter(str_detect(category, prod),
            str_detect(category, cat)) %>% 
     e_chart(region) %>%
-    e_map_register('vn', haitools::small_vnjson) %>%
+    e_map_register('vn', small_vnjson ) %>%
     e_map(value, map = 'vn',
           roam = "move",
           zoom = 1.2
