@@ -9,18 +9,18 @@ draw_viet_map =  function(data,cat, prod) {
     e_map_register('vn', small_vnjson ) %>%
     e_map(value, map = 'vn',
           roam = "move",
-          zoom = 1.2
-          #left = "90%",
-          #right = "90%"
-        #  label = list(show = FALSE, position = "left"),
+          zoom = 1.2,
+          itemStyle = list(areaColor ="#fac858",
+                           borderWidth = .2,
+                           borderColor = "#272727"),
+          select = list(itemStyle = list(areaColor = "#5470c6")),
+          emphasis = list(itemStyle = list(areaColor = "#5470c6"))
 ) %>%
     e_visual_map(value) %>%
-   # e_legend(FALSE) %>% 
     e_tooltip() %>% 
-    #e_theme("sakura") %>% 
     e_show_loading()
 }
- # agri %>% filter(year == "2019") %>% 
- # draw_viet_map(cat = "prod",prod = "cereal")
+  agri %>% filter(year == "2019") %>% 
+  draw_viet_map(cat = "prod",prod = "cereal")
 
  
