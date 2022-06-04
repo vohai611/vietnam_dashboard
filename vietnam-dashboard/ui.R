@@ -19,18 +19,21 @@ library(shinydashboardPlus)
 ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
   dashboardHeader(),
-  dashboardSidebar(
+  dashboardSidebar(width = "250px",
     selectInput("category", "Category", choices = c("Area" = "area", "Production" = "prod"))
     
   ),
   dashboardBody(
-    column(6, box(title = "Viet map",height = NULL,
-                  fluidRow(echarts4rOutput("viet_map", height = "800px"))
-    )),
-    column(6,
-           box(width = 6, 
-               plotOutput("province_crop")))
-    
-  
-  
-))
+    fluidRow(
+      column(
+        width = 6, box(
+          width = NULL, 
+          title = "Viet map",
+          height = NULL,
+          fluidRow(echarts4rOutput("viet_map", height = "800px"))
+        )
+      ),
+      column(width = 6,
+             box(width = NULL,
+               plotOutput("province_crop")
+             )))))
