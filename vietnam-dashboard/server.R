@@ -120,7 +120,12 @@ server = function(input,output ,session){
   map_clicked = reactive({req(length(input$viet_map_clicked_data$name) == 1)
     isolate(input$viet_map_clicked_data$name)
     })
+  
+  onevent("mouseenter", "box1", showNotification("Click for more infor!",
+                                                 type = "warning"))
 
+  onevent("mouseenter", "box2", showNotification("Click for more infor!",
+                                                 type = "warning"))
   
   
 }
