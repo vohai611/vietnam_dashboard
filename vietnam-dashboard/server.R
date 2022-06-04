@@ -14,13 +14,28 @@ server = function(input,output ,session){
   
 
 # box  --------------------------------------------------------------------------------------------
-  output$prod_box = renderInfoBox({
+ ## product box----
+  ### on click -----
+  onclick("box1", showModal(modalDialog(title = "Yield production ranks",
+                                        renderDataTable(prod_rank),
+                                        size = "l",
+                                        easyClose = TRUE)))
+  
+   output$prod_box = renderInfoBox({
     req(map_clicked())
     prod_rank = prod_rank %>% 
       filter(region == map_clicked()) %>% 
       filter(str_detect(category, input$product))
     
+    country_rank =prod_rank$country_rank[[1]]
+    region_rank =prod_rank$region_rank[[1]]
+    
+    color = case_when(country_rank <= 10 ~ "green",
+                      country_rank <= 20 ~ "yellow",
+                      TRUE ~ "red")
+    
    infoBox(title = "Yield production",
+           color = color,
            icon = icon("pagelines"),
              HTML("Country rank: ", prod_rank$country_rank[[1]],"<br/>",
                     "Region rank: ", prod_rank$region_rank[[1]], "<br/>",
@@ -29,18 +44,32 @@ server = function(input,output ,session){
     
   })
   
+   ## area box -----
+   ### on click ----
+  onclick("box2", showModal(modalDialog(title = "Yield area ranks",
+                                        renderDataTable(area_rank),
+                                        size = "l",
+                                        easyClose = TRUE)))
 
   output$area_box = renderInfoBox({
     req(map_clicked())
-    area_box = area_rank %>% 
+    area_rank = area_rank %>% 
       filter(region == map_clicked()) %>% 
       filter(str_detect(category, input$product))
+   
+    country_rank = area_rank$country_rank[[1]]
+    region_rank = area_rank$region_rank[[1]] 
+    
+    color = case_when(country_rank <= 10 ~ "green",
+                      country_rank <= 20 ~ "yellow",
+                      TRUE ~ "red")
     
     infoBox(title = "Yield area",
             icon= icon("layer-group"),
-            HTML("Country rank: ", area_box$country_rank[[1]],"<br/>",
-                 "Region rank: ", area_box$region_rank[[1]], "<br/>",
-                 '<i style="color:#9c9a95;font-size:14px;">', area_box$area[[1]], "<i/>"))
+            color = color,
+            HTML("Country rank: ", country_rank,"<br/>",
+                 "Region rank: ", region_rank, "<br/>",
+                 '<i style="color:#9c9a95;font-size:14px;">', area_rank$area[[1]], "<i/>"))
     
     
   })
@@ -92,5 +121,6 @@ server = function(input,output ,session){
     isolate(input$viet_map_clicked_data$name)
     })
 
+  
   
 }

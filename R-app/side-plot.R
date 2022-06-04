@@ -10,7 +10,7 @@ side_plot = function(data, cat, region, title){
     e_title(text = title,
             subtext = "From 1995-2020") %>% 
     e_timeline_opts(
-      play_interval = "200",
+      play_interval = "50",
       top = 10,
       right = 50,
       left =200

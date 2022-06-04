@@ -16,8 +16,10 @@ library(forcats)
 library(echarts4r)
 library(plotly)
 library(shinydashboard)
-library(shinydashboardPlus)
+#library(shinydashboardPlus)
 library(shinyWidgets)
+library(shinyjs)
+library(shinyBS)
 
 ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
@@ -28,6 +30,7 @@ ui =  dashboardPage(
 
   ),
   dashboardBody(
+    useShinyjs(),
     #tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
     fluidRow(
       column(
@@ -60,10 +63,10 @@ ui =  dashboardPage(
              
              # box ---------------------------------------------------------------------------------------------------
              fluidRow(
-               infoBoxOutput(width = 6,
-                             outputId = "prod_box"),
-               infoBoxOutput(width = 6, 
-                             outputId = "area_box")), 
+               div(id = "box1", infoBoxOutput(width = 6,
+                             outputId = "prod_box")),
+               div(id = "box2", infoBoxOutput(width = 6, 
+                             outputId = "area_box"))), 
              box(
                title = NULL,
                width = NULL,
