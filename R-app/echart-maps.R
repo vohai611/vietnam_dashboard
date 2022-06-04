@@ -1,4 +1,4 @@
-small_vnjson = readRDS("data/small_vnjson.rds")
+small_vnjson = readRDS(here("data/small_vnjson.rds"))
 
 draw_viet_map =  function(data,cat, prod) {
   data %>%
