@@ -1,5 +1,3 @@
-library(echarts4r)
-
 draw_viet_map =  function(data,cat, prod) {
   data %>%
     filter(!region %in% .env$region) %>% 
@@ -20,7 +18,7 @@ draw_viet_map =  function(data,cat, prod) {
     #e_theme("sakura") %>% 
     e_show_loading()
 }
- agri %>% filter(year == "2019") %>% 
- draw_viet_map(cat = "prod",prod = "cereal")
+ # agri %>% filter(year == "2019") %>% 
+ # draw_viet_map(cat = "prod",prod = "cereal")
 
  
