@@ -6,6 +6,7 @@ source(here("R-app/echart-maps.R"))
 
 agri = readRDS(here("data/agri.rds"))
 prod_rank = readRDS(here("data/prod_rank.rds"))
+area_rank = readRDS(here("data/area_rank.rds"))
 
 # Define server logic required to draw a histogram
 server = function(input,output ,session){
@@ -17,7 +18,8 @@ server = function(input,output ,session){
       filter(region == map_clicked()) %>% 
       filter(str_detect(category, input$product))
     
-   infoBox(title = "Production",
+   infoBox(title = "Yield production",
+           icon = icon("pagelines"),
              HTML("Country rank: ", prod_rank$country_rank[[1]],"<br/>",
                     "Region rank: ", prod_rank$region_rank[[1]], "<br/>",
                   '<i style="color:#9c9a95;font-size:14px;">', prod_rank$area[[1]], "<i/>"))
@@ -26,6 +28,20 @@ server = function(input,output ,session){
   })
   
 
+  output$area_box = renderInfoBox({
+    area_box = area_rank %>% 
+      filter(region == map_clicked()) %>% 
+      filter(str_detect(category, input$product))
+    
+   infoBox(title = "Yield area",
+           icon= icon("layer-group"),
+             HTML("Country rank: ", area_box$country_rank[[1]],"<br/>",
+                    "Region rank: ", area_box$region_rank[[1]], "<br/>",
+                  '<i style="color:#9c9a95;font-size:14px;">', area_box$area[[1]], "<i/>"))
+      
+    
+  })
+  
 # map ---------------------------------------------------------------------------------------------------
 
   output$viet_map = renderEcharts4r({
@@ -40,9 +56,11 @@ server = function(input,output ,session){
 
   output$province_crop = renderEcharts4r({
     req(map_clicked(), input$category)
-    
     isolate({ 
-      side_plot(agri, input$category, region = map_clicked())
+      title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked()),
+                        input$category == "area" ~ paste0("Yield Area of ", map_clicked()))
+      side_plot(agri, input$category, region = map_clicked(),
+                title =title)
     })
   })
   

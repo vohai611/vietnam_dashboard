@@ -17,3 +17,18 @@ prod_rank = agri %>%
   
 write_rds(prod_rank,"data/prod_rank.rds")
 
+# yields area rank --------------------------------------------------------------------------------------
+
+area_rank = agri %>% 
+  filter(! region %in% str_to_title(.env$region)) %>% 
+  filter(year == 2019) %>% 
+  filter(str_detect(category, "area")) %>% 
+  group_by(category) %>% 
+  mutate(country_rank = min_rank(desc(value))) %>% 
+  ungroup() %>% 
+  group_by(area, category) %>% 
+  mutate(region_rank = min_rank(desc(value)))
+
+write_rds(area_rank, "data/area_rank.rds")
+  
+
