@@ -32,13 +32,6 @@ ui =  dashboardPage(
     fluidRow(
       column(
         width = 6,
-        fluidRow(
-          
-        # box ---------------------------------------------------------------------------------------------------
-          infoBoxOutput(width = 6,
-                        outputId = "prod_box"),
-          infoBoxOutput(width = 6, 
-                        outputId = "area_box")), 
         
         # choices -----------------------------------------------------------------------------------------------
         
@@ -64,6 +57,13 @@ ui =  dashboardPage(
       # side_chart --------------------------------------------------------------------------------------------
       
       column(width = 6,
+             
+             # box ---------------------------------------------------------------------------------------------------
+             fluidRow(
+               infoBoxOutput(width = 6,
+                             outputId = "prod_box"),
+               infoBoxOutput(width = 6, 
+                             outputId = "area_box")), 
              box(
                title = NULL,
                width = NULL,

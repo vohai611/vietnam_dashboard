@@ -15,6 +15,12 @@ side_area_plot = function(data, cat, reg){
     e_bar(Cereal, stack = "g1") %>% 
     e_bar(Paddy, stack = "g1") %>% 
     e_bar(Maize, stack = "g1") %>% 
-    e_bar(`Sweet Potato`, stack = "g1")
+    e_bar(`Sweet Potato`, stack = "g1") %>% 
+    e_legend_unselect("Cereal") %>% 
+    e_legend_unselect("Paddy") %>% 
+    e_legend_unselect("Maize") %>% 
+    e_legend_unselect("Sweet Potato") %>% 
+    e_tooltip() %>% 
+    e_show_loading()
 }
 # side_area_plot(agri, "area", "Nghe An")

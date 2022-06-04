@@ -71,7 +71,14 @@ server = function(input,output ,session){
     
     title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked()),
                       input$category == "area" ~ paste0("Yield Area of ", map_clicked()))
-    side_area_plot(agri, input$category, reg = map_clicked())
+   
+    product_names = c("cereal" ="Cereal",
+   "maize" ="Maize",
+   "paddy" ="Paddy",
+   "sw_potato" = "Sweet Potato")
+    
+    side_area_plot(agri, input$category, reg = map_clicked()) %>% 
+      e_legend_select(product_names[[input$product]])
   })
   
 
@@ -84,6 +91,6 @@ server = function(input,output ,session){
   map_clicked = reactive({req(length(input$viet_map_clicked_data$name) == 1)
     isolate(input$viet_map_clicked_data$name)
     })
-  
+
   
 }
