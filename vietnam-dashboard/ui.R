@@ -69,5 +69,7 @@ ui =  dashboardPage(
                width = NULL,
                echarts4rOutput("province_crop")
              ),
-             box(title = "table"))
+             box(title = NULL,
+                 width = NULL,
+                 echarts4rOutput("province_crop_time")))
     )))

@@ -9,8 +9,9 @@ draw_viet_map =  function(data,cat, prod) {
     e_map_register('vn', haitools::small_vnjson) %>%
     e_map(value, map = 'vn',
           roam = "move",
-          left = "90%",
-          right = "90%"
+          zoom = 1.2
+          #left = "90%",
+          #right = "90%"
         #  label = list(show = FALSE, position = "left"),
 ) %>%
     e_visual_map(value) %>%
