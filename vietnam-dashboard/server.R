@@ -16,10 +16,11 @@ server = function(input,output ,session){
 # box  --------------------------------------------------------------------------------------------
  ## product box----
   ### on click -----
-  onclick("box1", showModal(modalDialog(title = "Yield production ranks",
-                                        renderDataTable(prod_rank),
-                                        size = "l",
-                                        easyClose = TRUE)))
+  observeEvent(input$tb_rank_prod,
+               showModal(modalDialog(title = "Yield production ranks",
+                                     renderDataTable(prod_rank),
+                                     size = "l",
+                                     easyClose = TRUE)))
   
    output$prod_box = renderInfoBox({
     req(map_clicked())
@@ -46,7 +47,7 @@ server = function(input,output ,session){
   
    ## area box -----
    ### on click ----
-  onclick("box2", showModal(modalDialog(title = "Yield area ranks",
+  observeEvent(input$tp_rank_area, showModal(modalDialog(title = "Yield area ranks",
                                         renderDataTable(area_rank),
                                         size = "l",
                                         easyClose = TRUE)))
@@ -89,10 +90,11 @@ server = function(input,output ,session){
   output$province_crop = renderEcharts4r({
     req(map_clicked(), input$category)
     
-      title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked()),
-                        input$category == "area" ~ paste0("Yield Area of ", map_clicked()))
-      side_plot(agri, input$category, region = map_clicked(),
-                title =title)
+    title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked(), " in ", plot2_year()),
+                      input$category == "area" ~ paste0("Yield Area of ", map_clicked(), " in ", plot2_year()))
+    side_plot(agri, input$category, region = map_clicked(),
+              year = plot2_year(),
+              title =title)
   })
   
   output$province_crop_time = renderEcharts4r({
@@ -100,32 +102,37 @@ server = function(input,output ,session){
     
     title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked()),
                       input$category == "area" ~ paste0("Yield Area of ", map_clicked()))
-   
-    product_names = c("cereal" ="Cereal",
-   "maize" ="Maize",
-   "paddy" ="Paddy",
-   "sw_potato" = "Sweet Potato")
     
-    side_area_plot(agri, input$category, reg = map_clicked()) %>% 
+    product_names = c("cereal" ="Cereal",
+                      "maize" ="Maize",
+                      "paddy" ="Paddy",
+                      "sw_potato" = "Sweet Potato")
+    
+    side_area_plot(agri, input$category,
+                   reg = map_clicked()) %>% 
       e_legend_select(product_names[[input$product]])
   })
   
-
-# table -------------------------------------------------------------------------------------------------
-
-
-# others ------------------------------------------------------------------------------------------------
-
+  
+  # table -------------------------------------------------------------------------------------------------
+  
+  
+  # others ------------------------------------------------------------------------------------------------
+  
+  
   map_clicked = reactive({
-    if (is.null(input$viet_map_clicked_data$name)) {"Ha Noi"}
-    else {isolate(input$viet_map_clicked_data$name)}
+    input$viet_map_clicked_data$name %||% "Ha Noi"
   })
   
   onevent("mouseenter", "box1", showNotification("Click for more infor!",
                                                  type = "warning"))
-
+  
   onevent("mouseenter", "box2", showNotification("Click for more infor!",
                                                  type = "warning"))
+  
+  plot2_year = reactive({
+    input$province_crop_time_clicked_data$value[[1]] %||% "2019"
+  })
   
   
 }

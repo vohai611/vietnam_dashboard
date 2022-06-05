@@ -1,27 +1,19 @@
-side_plot = function(data, cat, region, title){
+side_plot = function(data, cat, region, title, year ){
   data %>% 
     filter(region == .env$region,
+           year == .env$year,
            str_detect(category, .env$cat)) %>% 
     mutate(category = fct_reorder(category, value)) %>% 
     arrange(desc(category)) %>% 
-    group_by(year) %>% 
-    e_chart(category, timeline = TRUE) %>%
-    e_bar(value) %>% 
-    e_title(text = title,
-            subtext = "From 1995-2020") %>% 
-    e_timeline_opts(
-      play_interval = "50",
-      top = 10,
-      right = 50,
-      left =200
-    ) %>% 
+    e_chart(category) %>%
+    e_pie(value, radius = c("50%", "70%")) %>% 
     e_tooltip() %>% 
-    e_legend(show = FALSE)
-  
+    e_legend(show = FALSE) %>% 
+    e_title(text = title)
   
 }
 
-#side_plot(agri, "prod", "Ninh Binh")
+#side_plot(agri, "prod", "Ninh Binh",title = 'abc', year = 2019)
 
 
 

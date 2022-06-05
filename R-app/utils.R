@@ -7,3 +7,9 @@ region = c(
   "South East",
   "Mekong River Delta" 
 )
+
+
+`%||%` = function(lhs, rhs){
+  if(is.null(lhs)) rhs else lhs
+}
+

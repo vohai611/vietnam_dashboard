@@ -24,20 +24,46 @@ ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
   dashboardHeader(disable = TRUE),
   dashboardSidebar(width = "250px",
-                   selectInput("category", "Category",
-                               choices = c("Area" = "area", "Production" = "prod"))
+                   # switchInput(
+                   #   inputId = "category",
+                   #   onLabel = "Production",
+                   #   value = TRUE,
+                   #   offLabel = "Area",
+                   # )
+                    selectInput("category", "Category",
+                                choices = c("Area" = "area", "Production" = "prod"))
 
   ),
   dashboardBody(
     useShinyjs(),
+    tags$head(tags$link(rel = 'stylesheet', type = "text/css",href = "style.css")),
     #tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
     fluidRow(
       column(
-             fluidRow(
-               div(id = "box1", infoBoxOutput(width = 6,
-                             outputId = "prod_box")),
-               div(id = "box2", infoBoxOutput(width = 6, 
-                             outputId = "area_box"))), 
+        fluidRow(
+          box(headerBorder = FALSE,
+              infoBoxOutput(width = 12,
+                            outputId = "prod_box"),
+              actionBttn(size = "xs",block = TRUE,
+                         inputId = "tb_rank_prod",
+                         label = "Show all",
+                         style = "fill", 
+                         icon = icon("bars"),
+                         color = "warning"
+              ) 
+          ),
+          box(solidHeader = TRUE,
+              
+              infoBoxOutput(width = 12, 
+                            outputId = "area_box"),
+              actionBttn(size = "xs",block = TRUE,
+                         inputId = "tb_rank_area",
+                         label = "Show all",
+                         style = "fill", 
+                         icon = icon("bars"),
+                         color = "warning"
+              ) 
+          )), 
         width = 6,
         
         # choices -----------------------------------------------------------------------------------------------
