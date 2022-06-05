@@ -17,10 +17,9 @@ draw_viet_map =  function(data,cat, prod) {
           emphasis = list(itemStyle = list(areaColor = "#5470c6"))
 ) %>%
     e_visual_map(value) %>%
+    e_map_select(name = "Ha Noi") %>% 
     e_tooltip() %>% 
     e_show_loading()
 }
-  agri %>% filter(year == "2019") %>% 
-  draw_viet_map(cat = "prod",prod = "cereal")
-
- 
+  # agri %>% filter(year == "2019") %>% 
+  # draw_viet_map(cat = "prod",prod = "cereal")

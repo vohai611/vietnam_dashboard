@@ -22,7 +22,7 @@ library(shinyBS)
 
 ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
-  dashboardHeader(),
+  dashboardHeader(disable = TRUE),
   dashboardSidebar(width = "250px",
                    selectInput("category", "Category",
                                choices = c("Area" = "area", "Production" = "prod"))
@@ -33,6 +33,11 @@ ui =  dashboardPage(
     #tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
     fluidRow(
       column(
+             fluidRow(
+               div(id = "box1", infoBoxOutput(width = 6,
+                             outputId = "prod_box")),
+               div(id = "box2", infoBoxOutput(width = 6, 
+                             outputId = "area_box"))), 
         width = 6,
         
         # choices -----------------------------------------------------------------------------------------------
@@ -61,11 +66,6 @@ ui =  dashboardPage(
       column(width = 6,
              
              # box ---------------------------------------------------------------------------------------------------
-             fluidRow(
-               div(id = "box1", infoBoxOutput(width = 6,
-                             outputId = "prod_box")),
-               div(id = "box2", infoBoxOutput(width = 6, 
-                             outputId = "area_box"))), 
              box(
                title = NULL,
                width = NULL,

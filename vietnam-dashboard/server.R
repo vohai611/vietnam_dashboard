@@ -116,10 +116,10 @@ server = function(input,output ,session){
 
 # others ------------------------------------------------------------------------------------------------
 
-  
-  map_clicked = reactive({req(length(input$viet_map_clicked_data$name) == 1)
-    isolate(input$viet_map_clicked_data$name)
-    })
+  map_clicked = reactive({
+    if (is.null(input$viet_map_clicked_data$name)) {"Ha Noi"}
+    else {isolate(input$viet_map_clicked_data$name)}
+  })
   
   onevent("mouseenter", "box1", showNotification("Click for more infor!",
                                                  type = "warning"))
