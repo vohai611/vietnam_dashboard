@@ -17,7 +17,7 @@ prod_rank = agri %>%
   
 write_rds(prod_rank,"data/prod_rank.rds")
 
-# yields area rank --------------------------------------------------------------------------------------
+# crop area rank --------------------------------------------------------------------------------------
 
 area_rank = agri %>% 
   filter(! region %in% str_to_title(.env$region)) %>% 

@@ -1,6 +1,6 @@
 small_vnjson = readRDS(here("data/small_vnjson.rds"))
 
-draw_viet_map =  function(data,cat, prod) {
+draw_viet_map =  function(data,cat, prod, region_selected) {
   data %>%
     filter(!region %in% .env$region) %>% 
     filter(str_detect(category, prod),
@@ -17,7 +17,7 @@ draw_viet_map =  function(data,cat, prod) {
           emphasis = list(itemStyle = list(areaColor = "#5470c6"))
 ) %>%
     e_visual_map(value) %>%
-    e_map_select(name = "Ha Noi") %>% 
+    e_map_select(name = region_selected) %>% 
     e_tooltip() %>% 
     e_show_loading()
 }

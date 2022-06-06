@@ -17,7 +17,7 @@ server = function(input,output ,session){
  ## product box----
   ### on click -----
   observeEvent(input$tb_rank_prod,
-               showModal(modalDialog(title = "Yield production ranks",
+               showModal(modalDialog(title = "Crop production ranks",
                                      renderDataTable({
                                        prod_rank %>% 
                                          filter(str_detect(category, input$product))
@@ -25,7 +25,7 @@ server = function(input,output ,session){
                                      size = "l",
                                      easyClose = TRUE)))
   
-   output$prod_box = renderInfoBox({
+  output$prod_box = renderInfoBox({
     req(map_clicked())
     prod_rank = prod_rank %>% 
       filter(region == map_clicked()) %>% 
@@ -38,31 +38,31 @@ server = function(input,output ,session){
                       country_rank <= 20 ~ "yellow",
                       TRUE ~ "red")
     
-   infoBox(title = "Yield production",
-           color = color,
-           icon = icon("pagelines"),
-             HTML("Country rank: ", prod_rank$country_rank[[1]],"<br/>",
-                    "Region rank: ", prod_rank$region_rank[[1]], "<br/>",
-                  '<i style="color:#9c9a95;font-size:14px;">', prod_rank$area[[1]], "<i/>"))
-      
+    infoBox(title = "Crop production",
+            color = color,
+            icon = icon("pagelines"),
+            HTML("Country rank: ", prod_rank$country_rank[[1]],"<br/>",
+                 "Region rank: ", prod_rank$region_rank[[1]], "<br/>",
+                 '<i style="color:#9c9a95;font-size:14px;">', prod_rank$area[[1]], "<i/>"))
+    
     
   })
   
-   ## area box -----
-   ### on click ----
-  observeEvent(input$tb_rank_area, showModal(modalDialog(title = "Yield area ranks",
-                                        renderDataTable({area_rank %>% 
-                                            filter(str_detect(category, input$product))
-                                            }),
-                                        size = "l",
-                                        easyClose = TRUE)))
-
+  ## area box -----
+  ### on click ----
+  observeEvent(input$tb_rank_area, showModal(modalDialog(title = "Crop area ranks",
+                                                         renderDataTable({area_rank %>% 
+                                                             filter(str_detect(category, input$product))
+                                                         }),
+                                                         size = "l",
+                                                         easyClose = TRUE)))
+  
   output$area_box = renderInfoBox({
     req(map_clicked())
     area_rank = area_rank %>% 
       filter(region == map_clicked()) %>% 
       filter(str_detect(category, input$product))
-   
+    
     country_rank = area_rank$country_rank[[1]]
     region_rank = area_rank$region_rank[[1]] 
     
@@ -70,7 +70,7 @@ server = function(input,output ,session){
                       country_rank <= 20 ~ "yellow",
                       TRUE ~ "red")
     
-    infoBox(title = "Yield area",
+    infoBox(title = "Crop area",
             icon= icon("layer-group"),
             color = color,
             HTML("Country rank: ", country_rank,"<br/>",
@@ -80,23 +80,23 @@ server = function(input,output ,session){
     
   })
   
-# map ---------------------------------------------------------------------------------------------------
-
+  # map ---------------------------------------------------------------------------------------------------
+  
   output$viet_map = renderEcharts4r({
     agri %>% 
       filter( year == "2019") %>% 
-      draw_viet_map(cat = category(), prod = input$product)
+      draw_viet_map(cat = category(), prod = input$product, map_clicked())
   })  
   
   
-
-# side chart --------------------------------------------------------------------------------------------
-
+  
+  # side chart --------------------------------------------------------------------------------------------
+  
   output$province_crop = renderEcharts4r({
     req(map_clicked(), category())
     
-    title = case_when(category() == "prod" ~ paste0("Yield Production of ", map_clicked(), " in ", plot2_year()),
-                      category() == "area" ~ paste0("Yield Area of ", map_clicked(), " in ", plot2_year()))
+    title = case_when(category() == "prod" ~ paste0("Crop Production of ", map_clicked()),
+                      category() == "area" ~ paste0("Crop Area of ", map_clicked()))
     side_plot(agri, category(), region = map_clicked(),
               year = plot2_year(),
               title =title)
@@ -105,8 +105,8 @@ server = function(input,output ,session){
   output$province_crop_time = renderEcharts4r({
     req(map_clicked(), category())
     
-    title = case_when(category() == "prod" ~ paste0("Yield Production of ", map_clicked()),
-                      category() == "area" ~ paste0("Yield Area of ", map_clicked()))
+    title = case_when(category() == "prod" ~ paste0("Crop Production of ", map_clicked()),
+                      category() == "area" ~ paste0("Crop Area of ", map_clicked()))
     
     product_names = c("cereal" ="Cereal",
                       "maize" ="Maize",
@@ -123,7 +123,7 @@ server = function(input,output ,session){
   
   
   # others ------------------------------------------------------------------------------------------------
- 
+  
   category = reactive({
     if(input$category == TRUE) "prod" else "area" 
   })

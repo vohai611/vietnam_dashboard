@@ -30,9 +30,9 @@ ui =  dashboardPage(
                      value = TRUE,
                      offLabel = "Area",
                    )
-                    # selectInput("category", "Category",
-                    #             choices = c("Area" = "area", "Production" = "prod"))
-
+                   # selectInput("category", "Category",
+                   #             choices = c("Area" = "area", "Production" = "prod"))
+                   
   ),
   dashboardBody(
     useShinyjs(),
@@ -73,8 +73,8 @@ ui =  dashboardPage(
           inputId = "product",justified = TRUE,
           label = NULL, 
           choices = c(Cereal = "cereal",
-                      Maize =  "maize", 
                       Paddy =  "paddy", 
+                      Maize =  "maize", 
                       `Sweet Potato` = "sw_potato"),
           status = "primary"
         ),
