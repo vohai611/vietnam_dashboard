@@ -47,7 +47,7 @@ server = function(input,output ,session){
   
    ## area box -----
    ### on click ----
-  observeEvent(input$tp_rank_area, showModal(modalDialog(title = "Yield area ranks",
+  observeEvent(input$tb_rank_area, showModal(modalDialog(title = "Yield area ranks",
                                         renderDataTable(area_rank),
                                         size = "l",
                                         easyClose = TRUE)))
