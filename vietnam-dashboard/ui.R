@@ -42,6 +42,7 @@ ui =  dashboardPage(
       column(
         fluidRow(
           box(headerBorder = TRUE,
+              solidHeader = TRUE,
               infoBoxOutput(width = 12,
                             outputId = "prod_box"),
               actionBttn(size = "xs",block = TRUE,

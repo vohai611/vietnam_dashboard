@@ -18,7 +18,10 @@ server = function(input,output ,session){
   ### on click -----
   observeEvent(input$tb_rank_prod,
                showModal(modalDialog(title = "Yield production ranks",
-                                     renderDataTable(prod_rank),
+                                     renderDataTable({
+                                       prod_rank %>% 
+                                         filter(str_detect(category, input$product))
+                                       }),
                                      size = "l",
                                      easyClose = TRUE)))
   
@@ -48,7 +51,9 @@ server = function(input,output ,session){
    ## area box -----
    ### on click ----
   observeEvent(input$tb_rank_area, showModal(modalDialog(title = "Yield area ranks",
-                                        renderDataTable(area_rank),
+                                        renderDataTable({area_rank %>% 
+                                            filter(str_detect(category, input$product))
+                                            }),
                                         size = "l",
                                         easyClose = TRUE)))
 
