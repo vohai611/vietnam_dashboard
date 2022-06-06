@@ -41,7 +41,7 @@ ui =  dashboardPage(
     fluidRow(
       column(
         fluidRow(
-          box(headerBorder = FALSE,
+          box(headerBorder = TRUE,
               infoBoxOutput(width = 12,
                             outputId = "prod_box"),
               actionBttn(size = "xs",block = TRUE,
@@ -80,6 +80,7 @@ ui =  dashboardPage(
         
         # map ---------------------------------------------------------------------------------------------------
         box(
+          solidHeader = TRUE,
           width = NULL, 
           title = NULL,
           height = NULL,
@@ -93,11 +94,13 @@ ui =  dashboardPage(
              
              # box ---------------------------------------------------------------------------------------------------
              box(
+               solidHeader = TRUE,
                title = NULL,
                width = NULL,
                echarts4rOutput("province_crop")
              ),
              box(title = NULL,
+                 solidHeader = TRUE,
                  width = NULL,
                  echarts4rOutput("province_crop_time")))
     )))
