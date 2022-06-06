@@ -24,14 +24,14 @@ ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
   dashboardHeader(disable = TRUE),
   dashboardSidebar(width = "250px",
-                   # switchInput(
-                   #   inputId = "category",
-                   #   onLabel = "Production",
-                   #   value = TRUE,
-                   #   offLabel = "Area",
-                   # )
-                    selectInput("category", "Category",
-                                choices = c("Area" = "area", "Production" = "prod"))
+                   switchInput(
+                     inputId = "category",
+                     onLabel = "Production",
+                     value = TRUE,
+                     offLabel = "Area",
+                   )
+                    # selectInput("category", "Category",
+                    #             choices = c("Area" = "area", "Production" = "prod"))
 
   ),
   dashboardBody(

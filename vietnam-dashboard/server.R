@@ -80,7 +80,7 @@ server = function(input,output ,session){
   output$viet_map = renderEcharts4r({
     agri %>% 
       filter( year == "2019") %>% 
-      draw_viet_map(cat = input$category, prod = input$product)
+      draw_viet_map(cat = category(), prod = input$product)
   })  
   
   
@@ -88,27 +88,27 @@ server = function(input,output ,session){
 # side chart --------------------------------------------------------------------------------------------
 
   output$province_crop = renderEcharts4r({
-    req(map_clicked(), input$category)
+    req(map_clicked(), category())
     
-    title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked(), " in ", plot2_year()),
-                      input$category == "area" ~ paste0("Yield Area of ", map_clicked(), " in ", plot2_year()))
-    side_plot(agri, input$category, region = map_clicked(),
+    title = case_when(category() == "prod" ~ paste0("Yield Production of ", map_clicked(), " in ", plot2_year()),
+                      category() == "area" ~ paste0("Yield Area of ", map_clicked(), " in ", plot2_year()))
+    side_plot(agri, category(), region = map_clicked(),
               year = plot2_year(),
               title =title)
   })
   
   output$province_crop_time = renderEcharts4r({
-    req(map_clicked(), input$category)
+    req(map_clicked(), category())
     
-    title = case_when(input$category == "prod" ~ paste0("Yield Production of ", map_clicked()),
-                      input$category == "area" ~ paste0("Yield Area of ", map_clicked()))
+    title = case_when(category() == "prod" ~ paste0("Yield Production of ", map_clicked()),
+                      category() == "area" ~ paste0("Yield Area of ", map_clicked()))
     
     product_names = c("cereal" ="Cereal",
                       "maize" ="Maize",
                       "paddy" ="Paddy",
                       "sw_potato" = "Sweet Potato")
     
-    side_area_plot(agri, input$category,
+    side_area_plot(agri, category(),
                    reg = map_clicked()) %>% 
       e_legend_select(product_names[[input$product]])
   })
@@ -118,7 +118,10 @@ server = function(input,output ,session){
   
   
   # others ------------------------------------------------------------------------------------------------
-  
+ 
+  category = reactive({
+    if(input$category == TRUE) "prod" else "area" 
+  })
   
   map_clicked = reactive({
     input$viet_map_clicked_data$name %||% "Ha Noi"
