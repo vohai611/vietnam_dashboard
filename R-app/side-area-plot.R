@@ -1,5 +1,7 @@
 side_area_plot = function(data, cat, reg){
   
+  unit = if_else(cat == "prod", "Thousand Ton", "Thousand HA")
+  
   data %>% 
     filter(! region %in% .env$region) %>% 
     filter(region == {{ reg }} ) %>% 
@@ -20,6 +22,7 @@ side_area_plot = function(data, cat, reg){
     e_legend_unselect("Paddy") %>% 
     e_legend_unselect("Maize") %>% 
     e_legend_unselect("Sweet Potato") %>% 
+    e_title(subtext = paste0("Unit: ", unit)) %>% 
     e_tooltip() %>% 
     e_show_loading()
 }

@@ -20,6 +20,8 @@ library(shinyWidgets)
 library(shinyjs)
 library(shinyBS)
 
+province_select = readRDS(here("data/province_select.rds"))
+
 ui =  dashboardPage(
   title = "Vietnam Agriculture dashboard",
   dashboardHeader(disable = TRUE),
@@ -29,6 +31,13 @@ ui =  dashboardPage(
                      onLabel = "Production",
                      value = TRUE,
                      offLabel = "Area",
+                   ),
+                   pickerInput(
+                     inputId = "province_select",
+                     label = "",width = "200px",
+                     choices = province_select,
+                     options = list(
+                       `live-search` = TRUE)
                    )
                    # selectInput("category", "Category",
                    #             choices = c("Area" = "area", "Production" = "prod"))

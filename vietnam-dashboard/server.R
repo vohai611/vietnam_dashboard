@@ -8,6 +8,7 @@ source(here("R-app/side-area-plot.R"))
 agri = readRDS(here("data/agri.rds"))
 prod_rank = readRDS(here("data/prod_rank.rds"))
 area_rank = readRDS(here("data/area_rank.rds"))
+province_select = readRDS(here("data/province_select.rds"))
 
 # Define server logic required to draw a histogram
 server = function(input,output ,session){
@@ -128,9 +129,16 @@ server = function(input,output ,session){
     if(input$category == TRUE) "prod" else "area" 
   })
   
-  map_clicked = reactive({
-    input$viet_map_clicked_data$name %||% "Ha Noi"
-  })
+  map_clicked = reactiveVal("Ha Noi")
+  observeEvent(input$province_select, map_clicked(input$province_select))
+  observeEvent(input$viet_map_clicked_data$name, {
+    province = input$viet_map_clicked_data$name
+    map_clicked(province)
+    updatePickerInput(session,"province_select",selected = province,
+                      choices = province_select,
+                      options = list(
+                        `live-search` = TRUE))
+    })
   
   onevent("mouseenter", "box1", showNotification("Click for more infor!",
                                                  type = "warning"))
