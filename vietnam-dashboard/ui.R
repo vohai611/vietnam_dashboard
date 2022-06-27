@@ -27,6 +27,7 @@ ui =  dashboardPage(
   dashboardHeader(disable = TRUE),
   dashboardSidebar(width = "250px",
                    switchInput(
+                     label = "Category",
                      inputId = "category",
                      onLabel = "Production",
                      value = TRUE,
@@ -34,7 +35,7 @@ ui =  dashboardPage(
                    ),
                    pickerInput(
                      inputId = "province_select",
-                     label = "",width = "200px",
+                     label = "Province/City",width = "200px",
                      choices = province_select,
                      options = list(
                        `live-search` = TRUE)
@@ -49,31 +50,7 @@ ui =  dashboardPage(
     #tags$style("@import url(https://use.fontawesome.com/releases/v5.7.2/css/all.css);"),
     fluidRow(
       column(
-        fluidRow(
-          box(headerBorder = TRUE,
-              solidHeader = TRUE,
-              infoBoxOutput(width = 12,
-                            outputId = "prod_box"),
-              actionBttn(size = "xs",block = TRUE,
-                         inputId = "tb_rank_prod",
-                         label = "Show all",
-                         style = "fill", 
-                         icon = icon("bars"),
-                         color = "warning"
-              ) 
-          ),
-          box(solidHeader = TRUE,
-              
-              infoBoxOutput(width = 12, 
-                            outputId = "area_box"),
-              actionBttn(size = "xs",block = TRUE,
-                         inputId = "tb_rank_area",
-                         label = "Show all",
-                         style = "fill", 
-                         icon = icon("bars"),
-                         color = "warning"
-              ) 
-          )), 
+        
         width = 6,
         
         # choices -----------------------------------------------------------------------------------------------
@@ -101,16 +78,41 @@ ui =  dashboardPage(
       # side_chart --------------------------------------------------------------------------------------------
       
       column(width = 6,
+             fluidRow(
+               box(headerBorder = TRUE,
+                   solidHeader = TRUE,
+                   infoBoxOutput(width = 12,
+                                 outputId = "prod_box"),
+                   actionBttn(size = "xs",block = TRUE,
+                              inputId = "tb_rank_prod",
+                              label = "Show all",
+                              style = "fill", 
+                              icon = icon("bars"),
+                              color = "warning"
+                   ) 
+               ),
+               box(solidHeader = TRUE,
+                   
+                   infoBoxOutput(width = 12, 
+                                 outputId = "area_box"),
+                   actionBttn(size = "xs",block = TRUE,
+                              inputId = "tb_rank_area",
+                              label = "Show all",
+                              style = "fill", 
+                              icon = icon("bars"),
+                              color = "warning"
+                   ) 
+               )),
              
              # box ---------------------------------------------------------------------------------------------------
              box(
                solidHeader = TRUE,
                title = NULL,
                width = NULL,
-               echarts4rOutput("province_crop")
+               echarts4rOutput("province_crop",height = "300px")
              ),
              box(title = NULL,
                  solidHeader = TRUE,
                  width = NULL,
-                 echarts4rOutput("province_crop_time")))
+                 echarts4rOutput("province_crop_time", height = "320px")))
     )))
